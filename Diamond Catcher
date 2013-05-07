@@ -1,0 +1,509 @@
+
+import android.view.WindowManager;
+import android.view.View;
+import android.os.Bundle;
+
+
+CompassManager compass;
+float direction;
+boolean isInfo= false;
+boolean isImages= false;
+boolean isCompass= true;
+
+final int Image_NB = 9;
+PImage[] img = new PImage[9];
+int i;
+int n;
+
+void setup(){
+  size(800, 480);
+  textFont(createFont("DINProLight",16));
+  smooth();
+  orientation(LANDSCAPE);
+  img[0] = loadImage("1.jpg");
+  img[1] = loadImage("2.jpg");
+  img[2] = loadImage("3.jpg");
+  img[3] = loadImage("4.jpg");
+  img[4] = loadImage("5.jpg");  
+  img[5] = loadImage("6.jpg");
+  img[6] = loadImage("7.jpg");
+  img[7] = loadImage("8.jpg");
+  img[8] = loadImage("9.jpg");
+  n=0;
+compass = new CompassManager(this);
+}
+
+void onCreate(Bundle bundle) 
+{
+  super.onCreate(bundle);
+  // fix so screen doesn't go to sleep when app is active
+  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+}
+
+void pause() {
+  if (compass != null) compass.pause();
+}
+
+
+void resume() {
+  if (compass != null) compass.resume();
+}
+
+void draw(){
+  background(0);
+  
+  if(isCompass){
+    compass();
+  }
+  else if(isImages){
+    images();
+  }
+  else if(isInfo){
+    info();
+  }
+  
+
+}
+
+  float getTime(){
+   int h= hour();
+   int m= minute();
+  int s= second();
+  fill(150);
+  textSize(24);
+  text(h + " : "+ m+ " : " + s, 50, 55);
+ // float rot=s;
+  float rot= (h*60) +m;
+  rot= TWO_PI/rot;
+  return rot;
+    
+  }
+
+
+void compass(){
+
+fill(150);
+rect(width-60,0,60,60);
+fill(100);
+beginShape();
+vertex(width-60,0);
+vertex(width-60,60);
+vertex(width,60);
+vertex(width,0);
+vertex(width-2,0);
+vertex(width-2,58);
+vertex(width-58,58);
+vertex(width-58,0);
+endShape();
+fill(0+n*100);
+beginShape();
+vertex(width-60,62);
+vertex(width-60,200);
+vertex(width-30,225);
+vertex(width,200);
+vertex(width,62);
+
+endShape();
+fill(0+n*155);
+beginShape();
+vertex(width-60,120);
+vertex(width-30,145);
+vertex(width,120);
+vertex(width,118);
+vertex(width-30,143);
+vertex(width-60,118);
+endShape();
+
+fill(0+n*155);
+beginShape();
+vertex(width-43,75);
+vertex(width-45,77);
+vertex(width-45,103);
+vertex(width-43,105);
+vertex(width-22,105);
+vertex(width-20,103);
+vertex(width-20,77);
+vertex(width-22,75);
+endShape();
+beginShape();
+vertex(width-18,81);
+vertex(width-18,105);
+vertex(width-20,107);
+vertex(width-39,107);
+vertex(width-39,109);
+vertex(width-37,111);
+vertex(width-16,111);
+vertex(width-14,109);
+vertex(width-14,83);
+vertex(width-16,81);
+endShape();
+fill(0+n*100);
+rect(width-40,80,8,8);
+rect(width-28,82,4,2);
+rect(width-30,86,6,2);
+rect(width-40,90,16,2);
+rect(width-40,94,16,2);
+rect(width-40,98,10,2);
+fill(0+n*155);
+rect(width-38,82,4,4);
+fill(0+n*155);
+rect(width-50,160,40,28);
+fill(0+n*100);
+rect(width-48,162,36,24);
+fill(0+n*155);
+beginShape();
+vertex(width-46,180);
+vertex(width-46,184);
+vertex(width-16,184);
+vertex(width-20,180);
+vertex(width-24,182);
+vertex(width-30,170);
+vertex(width-36,176);
+vertex(width-40,174);
+endShape();
+ellipse(width-18,168,6,6);
+  
+  fill(150);
+textFont(createFont("DINProLight",16));
+ 
+  textSize(24);
+  text("The Direction of 55 Cancri e",50,30);
+  float r= getTime();
+  float dir=degrees( r+direction);
+  fill(180);
+  text(nf(dir+360, 3, 4)+"°", 50, 80);
+
+noStroke();
+ textSize(16); 
+
+  fill(150);
+translate(width/2, height/2);
+  scale(2);
+  rotate(direction+ r);
+  
+
+beginShape();
+  vertex(0, -110);
+  vertex(-70, 30);
+  vertex(-40, 70);
+  vertex(40, 70);
+  vertex(70, 30);
+  endShape(CLOSE);
+  fill(0);
+  rect(-70,30,140,2);
+  beginShape();
+  vertex(1,-110);
+  vertex(41,70);
+  vertex(39,70);
+  vertex(-1,-110);
+  endShape(CLOSE);
+  beginShape();
+  vertex(1,-110);
+  vertex(-39,70);
+  vertex(-41,70);
+  vertex(-1,-110);
+  endShape(CLOSE);
+   beginShape();
+  vertex(1,70);
+  vertex(34,30);
+  vertex(31.5,30);
+  vertex(-1.5,70);
+  endShape(CLOSE);
+   beginShape();
+  vertex(-1,70);
+  vertex(-34,30);
+  vertex(-31.5,30);
+  vertex(1.5,70);
+  endShape(CLOSE);
+
+
+}
+
+void directionEvent(float newDirection) {
+  direction = newDirection;
+}
+
+void info(){
+
+fill(150);
+rect(width-60,0,60,60);
+fill(100);
+beginShape();
+vertex(width-60,0);
+vertex(width-60,60);
+vertex(width,60);
+vertex(width,0);
+vertex(width-2,0);
+vertex(width-2,58);
+vertex(width-58,58);
+vertex(width-58,0);
+endShape();
+fill(0+n*100);
+beginShape();
+vertex(width-60,62);
+vertex(width-60,200);
+vertex(width-30,225);
+vertex(width,200);
+vertex(width,62);
+
+endShape();
+fill(0+n*155);
+beginShape();
+vertex(width-60,120);
+vertex(width-30,145);
+vertex(width,120);
+vertex(width,118);
+vertex(width-30,143);
+vertex(width-60,118);
+endShape();
+
+fill(0+n*155);
+beginShape();
+vertex(width-12,74);
+vertex(width-50,100);
+vertex(width-32,100);
+vertex(width-30,118);
+endShape();
+fill(0+n*155);
+rect(width-50,160,40,28);
+fill(0+n*100);
+rect(width-48,162,36,24);
+fill(0+n*155);
+beginShape();
+vertex(width-46,180);
+vertex(width-46,184);
+vertex(width-16,184);
+vertex(width-20,180);
+vertex(width-24,182);
+vertex(width-30,170);
+vertex(width-36,176);
+vertex(width-40,174);
+endShape();
+ellipse(width-18,168,6,6);
+
+  fill(180);
+ textSize(24);
+  text("Latest News", (width-500)/2, 40);
+textSize(18);
+String s = "There’s nothing quite like a planet made mostly of diamond to get everybody’s attention, and that is what a team of astronomers from Yale says it might have found. The researchers say that 55 Cancri e, a rocky super-Earth, is mainly made of carbon – in the form of diamond and graphite.";
+text(s, (width-500)/2, (height-300)/2-20, 500, 300);  // Text wraps within text box
+String s1 = "This is not the first time a 「diamond planet」 has hit the headlines. Last year an international team of researchers found a pulsar, with an orbiting planet about the mass of Jupiter, that seemed to be made entirely of diamond. Further research revealed that 「the planet」 was, in fact, the pulsar’s companion star – an ultralow-mass carbon white dwarf that just about survived being completely destroyed by the pulsar. The core of the remnant would mostly be carbon and some oxygen, but thanks to the near-Jupiter mass of the companion star, its own gravity could crystallize it to form diamond – just how carbon is transformed into diamond deep within the Earth.";
+text(s1, (width-500)/2, (height-300)/2+100, 500, 300);  // Text wraps within text box
+
+
+noStroke();
+
+}
+
+void images(){
+
+fill(150);
+rect(width-60,0,60,60);
+fill(100);
+beginShape();
+vertex(width-60,0);
+vertex(width-60,60);
+vertex(width,60);
+vertex(width,0);
+vertex(width-2,0);
+vertex(width-2,58);
+vertex(width-58,58);
+vertex(width-58,0);
+endShape();
+fill(0+n*100);
+beginShape();
+vertex(width-60,62);
+vertex(width-60,200);
+vertex(width-30,225);
+vertex(width,200);
+vertex(width,62);
+
+endShape();
+fill(0+n*155);
+beginShape();
+vertex(width-60,120);
+vertex(width-30,145);
+vertex(width,120);
+vertex(width,118);
+vertex(width-30,143);
+vertex(width-60,118);
+endShape();
+
+fill(0+n*155);
+beginShape();
+vertex(width-12,74);
+vertex(width-50,100);
+vertex(width-32,100);
+vertex(width-30,118);
+endShape();
+beginShape();
+vertex(width-43,155);
+vertex(width-45,157);
+vertex(width-45,183);
+vertex(width-43,185);
+vertex(width-22,185);
+vertex(width-20,183);
+vertex(width-20,157);
+vertex(width-22,155);
+endShape();
+beginShape();
+vertex(width-18,161);
+vertex(width-18,185);
+vertex(width-20,187);
+vertex(width-39,187);
+vertex(width-39,189);
+vertex(width-37,191);
+vertex(width-16,191);
+vertex(width-14,189);
+vertex(width-14,163);
+vertex(width-16,161);
+endShape();
+fill(0+n*100);
+rect(width-40,160,8,8);
+rect(width-28,162,4,2);
+rect(width-30,166,6,2);
+rect(width-40,170,16,2);
+rect(width-40,174,16,2);
+rect(width-40,178,10,2);
+fill(0+n*155);
+rect(width-38,162,4,4);
+
+  tint(255, 255);
+  rectMode(CENTER);
+  imageMode(CENTER);
+  fill(120);
+  rect(width/2,height/2,width*2/3+20,height*2/3+20);
+rectMode(CORNER);
+  image(img[i], width/2, height/2, width*2/3, height*2/3);
+  fill(120,120,120);
+
+  rect(0, height/2, 50, 50);
+  rect(width-50, height/2, 50, 50);
+
+fill(255,255,255,200);
+beginShape();
+vertex(26,height/2+15);
+vertex(18,height/2+25);
+vertex(26,height/2+35);
+vertex(30,height/2+35);
+vertex(22,height/2+25);
+vertex(30,height/2+15);
+endShape(CLOSE);
+fill(255,255,255,200);
+beginShape();
+vertex(width-26,height/2+15);
+vertex(width-18,height/2+25);
+vertex(width-26,height/2+35);
+vertex(width-30,height/2+35);
+vertex(width-22,height/2+25);
+vertex(width-30,height/2+15);
+endShape(CLOSE);
+fill(255);
+noStroke();
+ 
+  fill(255);
+textSize(18);
+  text("Photo of 55 Cancri e",width/2-80,40);
+
+noStroke(); 
+
+
+}
+
+
+
+
+
+void mousePressed(){
+ if (mouseX>width-100 && mouseX<width && mouseY>0 && mouseY<70){
+    n++;
+    if (n>1){
+      n=0;
+    }
+
+}  
+ if(n==1){
+  if(isCompass){
+    if(mouseX>width-80 && mouseX<width && mouseY>70 && mouseY<135){
+      
+    isCompass=false;
+    isInfo =true;
+    }
+    
+    else if(mouseX>width-80 && mouseX<width && mouseY>140 && mouseY<220){
+      
+    isCompass=false;
+    isImages =true;
+    }
+    //if images button is hit
+
+
+
+    else {
+    isCompass= true;
+    }
+  }   
+  
+
+
+  else if(isImages){
+
+       if(mouseX>width-80 && mouseX<width && mouseY>70 && mouseY<135){
+      
+    isImages=false;
+    isCompass =true;
+    }
+    
+    else if(mouseX>width-80 && mouseX<width && mouseY>140 && mouseY<220){
+      
+    isImages=false;
+    isInfo =true;
+    }
+    //if images button is hit
+
+else if (mouseX > 0 && mouseX<80 && mouseY > height/2 && mouseY< height/2+50) {
+    i--; 
+    if (i<0) {
+      i = 8;
+        }
+      }
+  else if (mouseX > width-80 && mouseX<width && mouseY > height/2 && mouseY< height/2+50) {
+        i++;
+        if (i>Image_NB-1) {
+          i = 0;
+    }
+  }
+
+    else {
+    isImages= true;
+    }
+    
+  }
+
+
+
+  else if(isInfo){
+
+          if(mouseX>width-80 && mouseX<width && mouseY>70 && mouseY<135){
+      
+    isInfo=false;
+    isCompass =true;
+    }
+    
+    else if(mouseX>width-80 && mouseX<width && mouseY>140 && mouseY<220){
+      
+    isInfo=false;
+    isImages =true;
+i=0;
+    }
+    //if images button is hit
+
+
+
+    else {
+    isInfo= true;
+    } 
+    
+  }
+  }
+}
